@@ -6,7 +6,6 @@ var Zlib = require('zlib');
 var Iconv = require('iconv-lite');
 Iconv.skipDecodeWarning = true;
 var URL = require('url');
-var Lib = require('./lib');
 
 var TAG = 'sendRequest:';
 
