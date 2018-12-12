@@ -40,7 +40,6 @@ var SendRequestHelper = function(params) {
 
 	if(data.constructor == Object)
 	{
-		console.debug("SEND: ", data);
 		// Need to convert an object to string
 		try
 		{
