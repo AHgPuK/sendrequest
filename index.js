@@ -107,8 +107,18 @@ var SendRequestHelper = function(params) {
 				{
 				}
 
-				Object.assign(args.options, URL.parse(location));
+				let newLocationObject = URL.parse(location);
 
+				for (let key in newLocationObject)
+				{
+					let val = newLocationObject[key];
+
+					if (val)
+					{
+						args.options[key] = val;
+					}
+				}
+				
 				if (args.options.headers && args.options.headers.Host)
 				{
 					args.options.headers.Host = args.options.host;
