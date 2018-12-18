@@ -55,6 +55,11 @@ var SendRequestHelper = function(params) {
 		options.headers['Content-Length'] = Buffer.byteLength(data);
 	}
 
+	if (!options.method)
+	{
+		options.method = (data) ? 'POST' : 'GET';
+	}
+
 	var responseFunction = function(res) {
 		//res.setEncoding('utf-8');
 
@@ -327,6 +332,16 @@ let SendRequestWithPromise = function(options, postData) {
 module.exports = function(options, postData) {
 
 	let retries = isNaN(options.retries) ? 2 : options.retries;
+
+	if (options.url)
+	{
+		let urlParser = URL.parse(url);
+
+		options.host = urlParser.hostname;
+		options.path = urlParser.path;
+		options.port = urlParser.port;
+		options.http = (urlParser.protocol == 'http:');
+	}
 
 	return Lib.waitForResultWithPromiseLimitIterations(function() {
 
