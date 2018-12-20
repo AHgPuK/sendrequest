@@ -335,7 +335,7 @@ module.exports = function(options, postData) {
 
 	if (options.url)
 	{
-		let urlParser = URL.parse(url);
+		let urlParser = URL.parse(options.url);
 
 		options.host = urlParser.hostname;
 		options.path = urlParser.path;
