@@ -27,6 +27,33 @@ var SendRequestHelper = function(params) {
 		return;
 	}
 
+	if (options.url)
+	{
+		let urlParser = URL.parse(options.url);
+
+		options.host = urlParser.hostname;
+		options.path = urlParser.path;
+		options.port = urlParser.port;
+		options.http = (urlParser.protocol == 'http:');
+		options.protocol = options.protocol || urlParser.protocol;
+		delete options.url;
+	}
+
+	if (options.proxy)
+	{
+		let path = URL.format(options);
+
+		options.headers = options.headers || {};
+		options.headers.Host = options.host;
+		options.path = path;
+
+		let proxyObject = URL.parse(options.proxy);
+		options.http = proxyObject.protocol == 'http:';
+		options.protocol = proxyObject.protocol;
+		options.host = proxyObject.hostname;
+		options.port = proxyObject.port;
+	}
+
 	options.timeout = options.timeout || 1000 * 60 * 5;
 
 	var handler = Https;
@@ -114,7 +141,12 @@ var SendRequestHelper = function(params) {
 
 				let newLocationObject = URL.parse(location);
 
-				for (let key in newLocationObject)
+				for (let key in {
+					host: true,
+					path: true,
+					port: true,
+					protocol: true,
+				})
 				{
 					let val = newLocationObject[key];
 
@@ -123,7 +155,7 @@ var SendRequestHelper = function(params) {
 						args.options[key] = val;
 					}
 				}
-				
+
 				if (args.options.headers && args.options.headers.Host)
 				{
 					args.options.headers.Host = args.options.host;
@@ -329,19 +361,18 @@ let SendRequestWithPromise = function(options, postData) {
 
 }
 
+/**
+ *
+ * @param {Object} options
+ * @param {string} options.url - Url
+ * @param {string} options.host - Host
+ * @param {Object} postData
+ * @returns {*}
+ */
+
 module.exports = function(options, postData) {
 
 	let retries = isNaN(options.retries) ? 2 : options.retries;
-
-	if (options.url)
-	{
-		let urlParser = URL.parse(options.url);
-
-		options.host = urlParser.hostname;
-		options.path = urlParser.path;
-		options.port = urlParser.port;
-		options.http = (urlParser.protocol == 'http:');
-	}
 
 	return Lib.waitForResultWithPromiseLimitIterations(function() {
 
@@ -380,6 +411,11 @@ module.exports = function(options, postData) {
 
 
 }
+
+/**
+ *
+ * @type {{isASCII: (function(*=): boolean), waitForResultWithPromise: (function(*=)), doNext: (handler: TimerHandler, timeout?: number, ...arguments: any[]) => number, waitForResultWithPromiseLimitIterations: (function(*, *, *=): *)}}
+ */
 
 let Lib = {
 
