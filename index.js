@@ -34,7 +34,6 @@ var SendRequestHelper = function(params) {
 		options.host = urlParser.hostname;
 		options.path = urlParser.path;
 		options.port = urlParser.port;
-		options.http = (urlParser.protocol == 'http:');
 		options.protocol = options.protocol || urlParser.protocol;
 		delete options.url;
 	}
@@ -48,7 +47,6 @@ var SendRequestHelper = function(params) {
 		options.path = path;
 
 		let proxyObject = URL.parse(options.proxy);
-		options.http = proxyObject.protocol == 'http:';
 		options.protocol = proxyObject.protocol;
 		options.host = proxyObject.hostname;
 		options.port = proxyObject.port;
@@ -58,7 +56,7 @@ var SendRequestHelper = function(params) {
 
 	var handler = Https;
 
-	if(options.http == true)
+	if(options.protocol == 'http:')
 	{
 		handler = Http;
 	}
@@ -118,7 +116,6 @@ var SendRequestHelper = function(params) {
 
 			if (res.statusCode >= 300 && res.statusCode < 400)
 			{
-
 				var args = {
 					options: Object.assign({}, params.options),
 					postData: params.postData,
@@ -256,6 +253,15 @@ var SendRequestHelper = function(params) {
 
 			if (callback != null)
 			{
+				if (options.isFullResponse == true)
+				{
+					resultObject = {
+						finalUrl: URL.format(options),
+						response: res,
+						body: resultObject
+					}
+				}
+
 				callback(null, resultObject);
 			}
 

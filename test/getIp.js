@@ -1,19 +1,25 @@
 let Promise = require('bluebird');
 let SendRequest = require('../index');
 
-let url = 'https://ifconfig.co';
-// let url = 'https://google.com';
+// let url = 'https://ifconfig.co';
+let url = 'http://google.com';
 
 let proxy = 'http://178.128.231.201:3128/';
 
 SendRequest({
 	url: url,
+	headers: {
+		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0'
+	},
 	// proxy: proxy,
 	isJsonParse: false,
+	isFullResponse: true,
 })
-.then(function(response) {
+.then(function(result) {
 
-	let match = response.match(/code class=\"ip\">(.*?)<\/code>/);
+	console.log('Final url:', result.finalUrl);
+
+	let match = result.body.match(/code class=\"ip\">(.*?)<\/code>/);
 	let ip = match && match[1];
 
 	if (ip)
@@ -22,7 +28,7 @@ SendRequest({
 	}
 	else
 	{
-		console.error(response);
+		console.error(result.body);
 	}
 
 })
