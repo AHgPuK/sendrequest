@@ -255,8 +255,15 @@ var SendRequestHelper = function(params) {
 			{
 				if (options.isFullResponse == true)
 				{
+					let finalUrl = getHrefFromUrlObject(options);
+
+					if (options.proxy)
+					{
+						finalUrl = options.path;
+					}
+
 					resultObject = {
-						finalUrl: URL.format(options),
+						finalUrl: finalUrl,
 						response: res,
 						body: resultObject
 					}
@@ -479,3 +486,21 @@ let Lib = {
 	},
 
 }
+
+let getHrefFromUrlObject = function(obj)
+{
+	let host = obj.host;
+
+	if (!host)
+	{
+		host = `${obj.hostname}`;
+
+		if (obj.port)
+		{
+			host += `:${obj.port}`;
+		}
+	}
+
+	return `${obj.protocol}//${host}${obj.path}`;
+}
+
