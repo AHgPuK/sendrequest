@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.3",
-    "iconv-lite": "^0.4.24"
+    "iconv-lite": "^0.4.24",
+    "request": "^2.88.0"
   }
 }

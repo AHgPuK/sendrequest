@@ -1,7 +1,10 @@
 let Promise = require('bluebird');
 let SendRequest = require('../index');
 
-let url = 'https://uae.souq.com/ae-en/oneplus-6t-dual-sim-128gb-8gb-ram-4g-lte-thunder-purple-76024800033/u/';
+// let url = 'https://uae.souq.com/ae-en/oneplus-6t-dual-sim-128gb-8gb-ram-4g-lte-thunder-purple-76024800033/u/';
+let url = 'http://google.com';
+
+let proxy = 'http://213.222.244.150:52862';
 
 SendRequest({
 	url: url,
@@ -10,6 +13,7 @@ SendRequest({
 	},
 	isJsonParse: false,
 	isFullResponse: true,
+	proxy: proxy,
 })
 .then(function(result) {
 

@@ -1,8 +1,7 @@
 let Promise = require('bluebird');
 let SendRequest = require('../index');
 
-let url = 'https://ifconfig.co';
-// let url = 'http://google.com';
+let url = 'https://uae.souq.com/qa-ar/Ø§Ø¨Ù-Ø§ÙÙÙÙ-8-plus-ÙØ¹-ÙØ§ÙØ³-ØªØ§ÙÙ-64-Ø¬ÙØ¬Ø§-Ø§ÙØ¬ÙÙ-Ø§ÙØ±Ø§Ø¨Ø¹-Ø§Ù-ØªÙ-Ø§Ù-Ø±ÙØ§Ø¯Ù-24051424/i/';
 
 let proxy = 'http://213.222.244.150:52862';
 
