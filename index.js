@@ -67,7 +67,7 @@ module.exports = function(options, postData) {
 
 	if (postData)
 	{
-		options.formData = postData;
+		options.body = postData;
 	}
 
 	if (!options.encoding)
