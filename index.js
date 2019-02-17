@@ -1,5 +1,6 @@
 var Promise = require('bluebird');
 var Request = require('request');
+var BrotliDecompress = require('brotli/decompress');
 
 // var Zlib = require('zlib');
 var Iconv = require('iconv-lite');
@@ -193,6 +194,13 @@ let Lib = {
 
 	decodeBody: function(res, options) {
 
+		var contentEncoding = res.headers['content-encoding'];
+
+		if (contentEncoding == 'br')
+		{
+			res.body = BrotliDecompress(res.body);
+		}
+
 		var responseEncoding = options.responseEncoding;
 		var charsetRegex = /charset\s?=\s?(?:\"|'|\s)?(.*?)(\"|\s|$|\/|>|')/;
 
@@ -200,7 +208,7 @@ let Lib = {
 		{
 			var contentType = res.headers['content-type'] || '';
 			var match = contentType.match(charsetRegex);
-			// responseEncoding = match && match[1];
+			responseEncoding = match && match[1];
 		}
 
 		if (!responseEncoding)
