@@ -69,6 +69,11 @@ module.exports = function(options, postData) {
 	if (postData)
 	{
 		options.body = postData;
+
+		if (!options.method)
+		{
+			options.method = 'POST';
+		}
 	}
 
 	if (!options.encoding)
@@ -230,24 +235,32 @@ let Lib = {
 
 		var resultObject = '';
 
-		try
+		if (res.body.constructor == Object)
 		{
-			resultObject = Iconv.decode(res.body, responseEncoding);
+			resultObject = res.body;
 		}
-		catch (e)
-		{
-			console.error(TAG, e);
-		}
-
-		if (resultObject == '')
+		else
 		{
 			try
 			{
-				resultObject = Iconv.decode(res.body, 'utf8');
+				resultObject = Iconv.decode(res.body, responseEncoding);
 			}
 			catch (e)
 			{
 				console.error(TAG, e);
+				resultObject = res.body;
+			}
+
+			if (resultObject == '')
+			{
+				try
+				{
+					resultObject = Iconv.decode(res.body, 'utf8');
+				}
+				catch (e)
+				{
+					console.error(TAG, e);
+				}
 			}
 		}
 
