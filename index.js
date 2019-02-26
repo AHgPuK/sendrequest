@@ -38,6 +38,11 @@ var SendRequest = function(options) {
 					finalUrl = finalUrl.replace(':80', '');
 				}
 
+				if (Lib.isASCII(finalUrl) == false)
+				{
+					finalUrl = Iconv.decode(finalUrl, 'utf8');
+				}
+
 				fulfill({
 					finalUrl: finalUrl,
 					response: res,
