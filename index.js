@@ -25,10 +25,21 @@ var SendRequest = function(options) {
 
 			if (options.isFullResponse)
 			{
-				let urlObj = new Url.URL(res.request.uri.href);
+				let finalUrl = res.request.uri.href;
+				let urlObj = new Url.URL(finalUrl);
+
+				if (finalUrl.indexOf(`https://${urlObj.host}:443/`) == 0)
+				{
+					finalUrl = finalUrl.replace(':443', '');
+				}
+
+				if (finalUrl.indexOf(`http://${urlObj.host}:80/`) == 0)
+				{
+					finalUrl = finalUrl.replace(':80', '');
+				}
 
 				fulfill({
-					finalUrl: urlObj.href,
+					finalUrl: finalUrl,
 					response: res,
 					body: body,
 				})
