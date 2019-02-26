@@ -1,5 +1,6 @@
 var Promise = require('bluebird');
 var Request = require('request');
+var Url = require('url');
 var BrotliDecompress = require('brotli/decompress');
 
 // var Zlib = require('zlib');
@@ -24,8 +25,10 @@ var SendRequest = function(options) {
 
 			if (options.isFullResponse)
 			{
+				let urlObj = new Url.URL(res.request.uri.href);
+
 				fulfill({
-					finalUrl: res.request.uri.href,
+					finalUrl: urlObj.href,
 					response: res,
 					body: body,
 				})
