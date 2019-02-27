@@ -43,6 +43,8 @@ var SendRequest = function(options) {
 					finalUrl = Iconv.decode(finalUrl, 'utf8');
 				}
 
+				finalUrl = decodeURI(finalUrl);
+
 				fulfill({
 					finalUrl: finalUrl,
 					response: res,
@@ -100,22 +102,22 @@ module.exports = function(options, postData) {
 		options.encoding = null;
 	}
 
-	let location = options.url;
-
-	if (Lib.isASCII(location) == false)
-	{
-		location = Iconv.decode(location, 'utf8');
-
-		if (options.url != location)
-		{
-			options.url = location;
-		}
-
+	// let location = options.url;
+	//
+	// if (Lib.isASCII(location) == false)
+	// {
+	// 	location = Iconv.decode(location, 'utf8');
+	//
+	// 	if (options.url != location)
+	// 	{
+	// 		options.url = location;
+	// 	}
+	//
 		if (Lib.isASCII(options.url) == false)
 		{
 			options.url = encodeURI(options.url);
 		}
-	}
+	// }
 
 	return Lib.waitForResultWithPromiseLimitIterations(function() {
 

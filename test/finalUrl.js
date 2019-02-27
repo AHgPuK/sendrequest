@@ -4,7 +4,8 @@ let SendRequest = require('../index');
 // let url = 'https://uae.souq.com/ae-en/oneplus-6t-dual-sim-128gb-8gb-ram-4g-lte-thunder-purple-76024800033/u/';
 // let url = 'http://google.com';
 // let url = 'https://sa.awok.com/dp-1392329';
-let url = 'https://uae.souq.com:443/ae-ar/ابل-ايفون-7-بلس-مع-فيس-تايم-128-جيجا-الجيل-الرابع-ال-تي-اي-ذهبي-وردي-11526707/i/';
+// let url = 'https://uae.souq.com:443/ae-ar/ابل-ايفون-7-بلس-مع-فيس-تايم-128-جيجا-الجيل-الرابع-ال-تي-اي-ذهبي-وردي-11526707/i/';
+let url = 'https://uae.souq.com/ae-ar/جي-بي-ال-سماعة-على-الأذن-ازرق-t450bt-12019940/i/';
 
 let proxy = 'http://213.222.244.150:52862';
 
