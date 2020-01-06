@@ -220,6 +220,11 @@ let Lib = {
 
 	decodeBody: function(res, options) {
 
+		if (!res.body)
+		{
+			return res.body;
+		}
+
 		var contentEncoding = res.headers['content-encoding'];
 
 		if (contentEncoding == 'br')
