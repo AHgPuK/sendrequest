@@ -240,11 +240,8 @@ let Lib = {
 		if (!responseEncoding)
 		{
 			// Extract charset from html
-			if (res.body)
-			{
-				var match = res.body.toString().match(charsetRegex);
-				responseEncoding = match && match[1];
-			}
+			var match = res.body.toString().match(charsetRegex);
+			responseEncoding = match && match[1];
 		}
 
 		if (!responseEncoding)
