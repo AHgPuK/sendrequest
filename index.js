@@ -21,6 +21,23 @@ var SendRequest = function(options) {
 				return;
 			}
 
+			if (options.json == true)
+			{
+				if (!body)
+				{
+					console.warn(`${TAG} Expected json, received null.`);
+					fulfill();
+					return;
+				}
+
+				if (body.constructor != Object)
+				{
+					console.warn(`${TAG} Expected json, received ${body.constructor.name} from ${options.url}.`);
+					fulfill();
+					return;
+				}
+			}
+
 			body = Lib.decodeBody(res, options);
 
 			if (options.isFullResponse)
