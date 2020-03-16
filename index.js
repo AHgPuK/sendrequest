@@ -136,7 +136,7 @@ module.exports = function(options, postData) {
 		}
 	// }
 
-	return Lib.waitForResultWithPromiseLimitIterations(function() {
+	return Lib.waitForResultWithPromiseLimitIterations(function(counter) {
 
 		return SendRequest(options)
 		.then(function(response) {
@@ -161,13 +161,17 @@ module.exports = function(options, postData) {
 				}
 			}
 
-			console.warn('Retrying...');
+			if (counter < retries + 1)
+			{
+				console.warn('Retrying...');
 
-			return Promise.delay(options.delayBetweenRetries || 200)
-			.then(function() {
-				return Promise.resolve(null);
-			});
+				return Promise.delay(options.delayBetweenRetries || 200)
+				.then(function() {
+					return Promise.resolve(null);
+				});
+			}
 
+			return Promise.resolve(null);
 		})
 
 	}, retries);
