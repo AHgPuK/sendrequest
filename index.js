@@ -161,7 +161,7 @@ module.exports = function(options, postData) {
 				}
 			}
 
-			console.warn('Retying...');
+			console.warn('Retrying...');
 
 			return Promise.delay(options.delayBetweenRetries || 200)
 			.then(function() {
