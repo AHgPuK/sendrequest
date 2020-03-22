@@ -161,17 +161,23 @@ module.exports = function(options, postData) {
 				}
 			}
 
+			let delay = 0;
+
 			if (counter < retries + 1)
 			{
 				console.warn('Retrying...');
 
-				return Promise.delay(options.delayBetweenRetries || 200)
-				.then(function() {
-					return Promise.resolve(null);
-				});
+				delay = options.delayBetweenRetries || 200;
 			}
 
-			return Promise.resolve(null);
+			return Promise.delay(delay)
+			.then(function() {
+				return Promise.resolve({
+					isRetry: true,
+					response: response,
+				});
+			});
+
 		})
 
 	}, retries);
@@ -230,12 +236,31 @@ let Lib = {
 
 			if (count > limit)
 			{
-				throw err || new Error(TAG + ': Limit iterations reached');
+				if (internalErr && internalErr.constructor != Error)
+				{
+					const temp = err || new Error(TAG + ': Limit iterations reached');
+					internalErr = Object.assign(temp, internalErr);
+				}
+
+				throw internalErr || err || new Error(TAG + ': Limit iterations reached');
 			}
 
 			count++;
 
-			return func(count);
+			return func(count)
+			.then(({isRetry, response}) => {
+
+				if (isRetry)
+				{
+					internalErr = response;
+					return
+				}
+
+				return respone;
+			})
+			.catch(err => {
+				internalErr = err;
+			});
 		});
 	},
 
