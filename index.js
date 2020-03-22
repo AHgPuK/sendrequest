@@ -130,10 +130,10 @@ module.exports = function(options, postData) {
 	// 		options.url = location;
 	// 	}
 	//
-		if (Lib.isASCII(options.url) == false)
-		{
-			options.url = encodeURI(options.url);
-		}
+	if (Lib.isASCII(options.url) == false)
+	{
+		options.url = encodeURI(options.url);
+	}
 	// }
 
 	return Lib.waitForResultWithPromiseLimitIterations(function(counter) {
@@ -143,12 +143,17 @@ module.exports = function(options, postData) {
 
 			if (options.isCancelled && options.isCancelled() == true)
 			{
-				return {};
+				return {
+					isRetry: false,
+				};
 			}
 
 			if (typeof response === 'string' && response.length > 0)
 			{
-				return response;
+				return {
+					isRetry: false,
+					response
+				};
 			}
 
 			if (typeof response === 'object')
@@ -157,7 +162,10 @@ module.exports = function(options, postData) {
 
 				if (error === 0)
 				{
-					return response;
+					return {
+						isRetry: false,
+						response
+					};
 				}
 			}
 
@@ -256,7 +264,7 @@ let Lib = {
 					return
 				}
 
-				return respone;
+				return response;
 			})
 			.catch(err => {
 				internalErr = err;
