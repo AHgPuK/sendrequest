@@ -32,8 +32,15 @@ var SendRequest = function(options) {
 
 				if (body.constructor != Object)
 				{
-					console.warn(`${TAG} Expected json, received ${body.constructor.name} from ${options.url}.`);
-					fulfill();
+					let message = (res.statusCode !== 200) ? `${res.statusCode}: ${res.statusMessage}` : body.constructor.name;
+
+					console.warn(`${TAG} Expected json, received ${message} from ${options.url}.`);
+					fulfill({
+						status: {
+							error: res.statusCode,
+							message: res.statusMessage,
+						},
+					});
 					return;
 				}
 			}
