@@ -1,8 +1,8 @@
 let Promise = require('bluebird');
 let SendRequest = require('../index');
 
-let url = 'https://ifconfig.co';
-// let url = 'http://google.com';
+// let url = 'https://ifconfig.co';
+let url = 'http://google.com';
 
 let proxy = 'http://213.222.244.150:52862';
 
