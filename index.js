@@ -322,7 +322,7 @@ let Lib = {
 
 		var resultObject = '';
 
-		if (res.body.constructor == Object)
+		if (res.body.constructor == Object || res.body.constructor == Array)
 		{
 			resultObject = res.body;
 		}
