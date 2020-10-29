@@ -30,7 +30,7 @@ var SendRequest = function(options) {
 					return;
 				}
 
-				if (body.constructor != Object)
+				if (!(body.constructor == Object || body.constructor == Array))
 				{
 					let message = (res.statusCode !== 200) ? `${res.statusCode}: ${res.statusMessage}` : body.constructor.name;
 
