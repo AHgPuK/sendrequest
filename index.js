@@ -94,7 +94,6 @@ var SendRequest = function(options) {
 			});
 		}
 
-		req.end();
 	})
 
 }
