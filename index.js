@@ -67,7 +67,12 @@ var SendRequest = function(options) {
 					finalUrl = Iconv.decode(finalUrl, 'utf8');
 				}
 
-				finalUrl = decodeURI(finalUrl);
+				try
+				{
+					finalUrl = decodeURI(finalUrl);
+				}
+				catch (e)
+				{}
 
 				fulfill({
 					finalUrl: finalUrl,
