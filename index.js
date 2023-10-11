@@ -296,6 +296,11 @@ let Lib = {
 		if (contentEncoding == 'br')
 		{
 			res.body = BrotliDecompress(res.body);
+
+			if (res.body?.constructor == Uint8Array)
+			{
+				res.body = Buffer.from(res.body.buffer);
+			}
 		}
 
 		var responseEncoding = options.responseEncoding;
